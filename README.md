@@ -152,6 +152,9 @@ This layer is divided into 3 key areas
 - repository interfaces
 - blocs
 
+And one optional area:
+- value objects
+
 All of which are explained in detail below.
 
 ### Entities
@@ -236,6 +239,51 @@ class RectangleBloc {
         }
         // other event handling...
     }
+}
+```
+
+### Value Objects
+
+```
+A Value Object represents a typed value in your domain. It has three fundamental characteristics: immutability, value equality and self validation. An Age, for example. 
+```
+
+Value objects are the fields that make up your (data structure) entities. They are a great way to abstract your validation logic away from your presentation layer.
+
+An example is provided below.
+
+```dart
+@immutable
+class EmailAddress {
+  final String value;
+
+  factory EmailAddress(String input) {
+    assert(input != null);
+    return EmailAddress._(
+      validateEmailAddress(input),
+    );
+  }
+
+  const EmailAddress._(this.value);
+
+  // toString, equals, hashCode...
+}
+
+String validateEmailAddress(String input) {
+  // Maybe not the most robust way of email validation but it's good enough
+  const emailRegex =
+      r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
+  if (RegExp(emailRegex).hasMatch(input)) {
+    return input;
+  } else {
+    throw InvalidEmailException(failedValue: input);
+  }
+}
+
+class InvalidEmailException implements Exception {
+  final String failedValue;
+
+  InvalidEmailException({@required this.failedValue});
 }
 ```
 
