@@ -70,7 +70,7 @@ For these reasons the BLoC pattern was selected as the architectural pattern for
 Note: Details of the other architectures considered can be found in the following folder in the repository:
 
 ```
-./architectures/
+./theory/architectures/
 ```
 
 ## Theory
@@ -339,7 +339,9 @@ class RectangleRepository implements IRectangleRepository {
 }
 ```
 
-## Implementation (File Structure)
+## Implementation
+
+### File Structure
 
 The best way to practically follow and enforce this architecture into your applications is via a well thought out file structure.
 
@@ -419,3 +421,14 @@ If you find that this file structure does not fully support your requirements so
 constants/                  <-- layer specific constants such as API keys, routes, urls, etc.
 utils/                      <-- layer specific useful functionality that does not fit into outher folders. i.e. misc functionality.
 ```
+
+### BLoC Library
+
+The Bloc library is an implementation of the BLoC pattern created by Felix Angelov. 
+
+You can review it in detail in the following [link](https://github.com/felangel/bloc/).
+
+This librabry is a great way to help enforce implementation of the BLoC pattern and help ensure best practices are used for the software files created in each layer.
+
+Some of the major benefits of this library include:
+- immutable (unchangeable) states which means a history of states are kept so you can roll back states at any point in time.
