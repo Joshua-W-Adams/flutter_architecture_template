@@ -413,6 +413,16 @@ abstract class IoCContainer {
 }
 ```
 
+## Packages
+
+A package should be created anytime code is intended to be used across projects / applications.
+
+The general theory on how a package should be created is as follows:
+- convert all layers of a feature
+- convert one or more layers of a feature
+
+For example. If you were converting an Authentication Repository to a package. You would take the entire data layer then the interface, entities and value objects from the domain layer. This would enable the use of the repository across many different projects and also adding different implementations of the repository to the package, i.e. one for AWS, GCP and Azure.
+
 ## Implementation
 
 ### File Structure
@@ -489,6 +499,11 @@ src/
         .../
     ioc_container                               <--- inversion of control container
     main.dart                                   <--- entry point for application
+packages/
+    package_1/
+        src/                                    <--- file structure as above
+        pubspec.yaml                            <--- package details
+    .../
 ```
 
 If you find that this file structure does not fully support your requirements some additional folders that may be added are suggested below:
