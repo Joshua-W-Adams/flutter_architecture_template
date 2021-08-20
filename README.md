@@ -110,7 +110,6 @@ This layer can only depend on the Bloc Layer.
 A sample widget demonstrating the theory is provided as follows:
 
 ```dart
-// TODO - Update with sample of event injection
 class PresentationComponent extends StatelessWidget {
     const PresentationComponent({
         Key? key,

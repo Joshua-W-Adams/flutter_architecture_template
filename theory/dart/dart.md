@@ -17,3 +17,8 @@ Stream<int> boatStream() async* {
     }
 }
 ```
+
+## Yield
+
+- yield : It is used to emit values from a generator either async or sync.
+- yield*: It delegates the call to another generator and after that generator stops producing the values, it resumes generating its own values.
