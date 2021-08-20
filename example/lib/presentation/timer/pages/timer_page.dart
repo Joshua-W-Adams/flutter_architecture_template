@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_tdd_boilerplate/data/timer/data_providers/local/ticker.dart';
 import 'package:flutter_clean_tdd_boilerplate/domain/timer/blocs/timer_bloc.dart';
+import 'package:flutter_clean_tdd_boilerplate/ioc_container.dart';
 import 'package:flutter_clean_tdd_boilerplate/presentation/timer/widgets/timer_background.dart';
 import 'package:flutter_clean_tdd_boilerplate/presentation/timer/widgets/timer_actions.dart';
 import 'package:flutter_clean_tdd_boilerplate/presentation/timer/widgets/timer_text.dart';
@@ -18,8 +18,7 @@ class TimerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      // TODO - Ticker to be replaced with a call to a IoC container
-      create: (_) => TimerBloc(ticker: Ticker()),
+      create: (_) => getIt<TimerBloc>(),
       child: const TimerView(),
     );
   }
