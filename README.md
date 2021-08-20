@@ -387,6 +387,33 @@ class RectangleRepository implements IRectangleRepository {
 }
 ```
 
+## Decoupling Data Layer and Domain Layer
+
+Given we have decoupled the data layer and the domain layer using repository interfaces and implementations in the architecture above. You may have noticed that this has introduced a new problem for us...
+
+```
+How do we get the implementation into the interface?
+```
+
+We do this by applying the principals of Inversion of Control (IoC) throught the application of an IoC container. An IoC container...
+
+```
+creates an object of a specified class and also injects all the dependency objects through a constructor, a property or a method at run time and disposes it at the appropriate time.
+```
+
+So therefore instead of creating instances of BloCs and directly passing the repository implementations. We instead ask the IoC container to create us a BLoC and handle all the dependancy injection.
+
+An example IoC container is provided below:
+
+```dart
+abstract class IoCContainer {
+    // all requests for a [RectangleRepository] in our app should be replaced by this function
+    IRectangleRepository getRectangleRepository() {
+        return RectangleRepository();
+    }
+}
+```
+
 ## Implementation
 
 ### File Structure
@@ -461,6 +488,7 @@ src/
             widgets/
             animations/
         .../
+    ioc_container                               <--- inversion of control container
     main.dart                                   <--- entry point for application
 ```
 
@@ -480,3 +508,11 @@ This librabry is a great way to help enforce implementation of the BLoC pattern 
 
 Some of the major benefits of this library include:
 - immutable (unchangeable) states which means a history of states are kept so you can roll back states at any point in time.
+
+### Get_It Package
+
+The Get_It package is a implementation of IoC using the service locator architectural pattern.
+
+You can review it in detail in the following [link](https://pub.dev/packages/get_it).
+
+This library is a great way for us to enforce the use of IoC and ensure best practice is followed for the IoC container itself.
