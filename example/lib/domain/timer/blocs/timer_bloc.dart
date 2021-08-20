@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_clean_tdd_boilerplate/data/timer/data_providers/local/ticker.dart';
+import 'package:flutter_clean_tdd_boilerplate/domain/timer/repository_interfaces/timer_repository_interface.dart';
 
 part 'timer_event.dart';
 part 'timer_state.dart';
@@ -9,12 +9,11 @@ part 'timer_state.dart';
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   static const int _duration = 60;
 
-  // TODO - replace with repository interface and IoC container to conform to DIP
-  final Ticker _ticker;
+  final TimerRepositoryInterface _ticker;
   StreamSubscription<int>? _tickerSubscription;
 
   TimerBloc({
-    required Ticker ticker,
+    required TimerRepositoryInterface ticker,
     // set ticker to private variable so it cannot be accessed outside the class
   })  : _ticker = ticker,
         // inject initial state with a default duration

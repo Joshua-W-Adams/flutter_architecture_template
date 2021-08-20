@@ -1,6 +1,7 @@
+import 'package:flutter_clean_tdd_boilerplate/data/timer/repository_implementations/timer_repository_implementation.dart';
+import 'package:flutter_clean_tdd_boilerplate/domain/timer/repository_interfaces/timer_repository_interface.dart';
 import 'package:get_it/get_it.dart';
-
-import 'data/timer/data_providers/local/ticker.dart';
+import 'data/timer/data_providers/local/ticker_local_data_provider.dart';
 import 'domain/timer/blocs/timer_bloc.dart';
 
 /// environments supported by IoC container. Allows easy swapping between mock,
@@ -20,16 +21,14 @@ Future<void> setupInversionOfControlContainer(Environment environment) async {
   );
 
   // Repository Implementations
-  // TODO - replace ticker with ticker repository implementation
-  getIt.registerLazySingleton<Ticker>(
-    () => Ticker(),
+  getIt.registerLazySingleton<TimerRepositoryInterface>(
+    () => TimerRepositoryImplementation(ticker: getIt()),
   );
 
   // Data providers/sources
-  // TODO - change ticker name to make it clear it is a data provider.
-  // sl.registerLazySingleton<Ticker>(
-  //   () => Ticker(),
-  // );
+  getIt.registerLazySingleton<TickerLocalDataProvider>(
+    () => TickerLocalDataProvider(),
+  );
 
   // Assign type inferences for implementations to be used in different
   // application environments. e.g. mock auth repository in dev and firebase

@@ -6,7 +6,6 @@ class TimerText extends StatelessWidget {
   const TimerText({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // TODO - Why is this updating the view when it is not in a BLoC builder?
     final duration = context.select((TimerBloc bloc) => bloc.state.duration);
     final minutesStr =
         ((duration / 60) % 60).floor().toString().padLeft(2, '0');
