@@ -139,6 +139,10 @@ class PresentationComponent extends StatelessWidget {
 
 ```
 
+### Widgets / Pages / Animations
+
+All widgets in the presentation layer should follow the composite design pattern outlined in the theory folder of this repository.
+
 ## Domain Layer
 
 ```
