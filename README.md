@@ -189,7 +189,9 @@ class RectangleEntity {
 
 An interface defines WHAT something does. And not HOW it does it. A repository is somewhere we get data from. Therefore...
 
+```
 "The responsibility of the repository interfaces are to define WHAT data the BLoCs require and NOT the implementation."
+```
 
 This is what allows the domain Layer to be independant of the data layer.
 
