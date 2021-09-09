@@ -22,3 +22,7 @@ Stream<int> boatStream() async* {
 
 - yield : It is used to emit values from a generator either async or sync.
 - yield*: It delegates the call to another generator and after that generator stops producing the values, it resumes generating its own values.
+
+## Const
+
+Const constructors are used to create canonicalized instances, which means a class instantiation with the same arguments will return the old instance from the memory. This makes our program memory efficient.

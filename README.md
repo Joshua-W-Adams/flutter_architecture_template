@@ -207,8 +207,9 @@ abstract class IRepository {
 
 ### Bloc
 
+```
 "The business logic component's responsibility is to respond to events from the presentation layer with new states."
-
+```
 i.e. the BLoC contains all the logic to co-ordinate/orchestrate this entire process and as such will be the location where the majority of our domain layer code lives.
 
 A bloc is separated into 3 separate files:
@@ -510,6 +511,10 @@ packages/
         src/                                    <--- file structure as above
         pubspec.yaml                            <--- package details
     .../
+test/                                           <--- all unit and widget tests, file structure as per src folder
+test_driver/                                    <--- integration test folder
+    app.dart                                    <--- configure application and drivers for testing
+    app_test.dart                               <--- integration tests
 ```
 
 If you find that this file structure does not fully support your requirements some additional folders that may be added are suggested below:
@@ -536,3 +541,166 @@ The Get_It package is a implementation of IoC using the service locator architec
 You can review it in detail in the following [link](https://pub.dev/packages/get_it).
 
 This library is a great way for us to enforce the use of IoC and ensure best practice is followed for the IoC container itself.
+
+# Testing
+
+Testing tests a function, widget or application operates as expected. It is used main benefits are:
+- higher confidence in code
+- documenting of code operation
+
+## Architecture
+
+The overall structure of for writing tests in flutter is represented below:
+
+```dart
+void main() {
+    group('some group name',() {
+
+        /// SETUP
+
+        // Registers a function to be run once before all tests
+        setUpAll(() async {
+            
+        });
+
+        // Registers a function to be run once after all tests
+        tearDownAll(() async {
+            
+        });
+
+        // any other global setup configuration required
+
+        // test naming should following the GIVEN, WHEN, THEN convention
+        // GIVEN - some context
+        // WHEN - some event happens
+        // THEN - some result is expected
+        test('name', () async {
+            // function structure should use the ARRANGE, ACT, ASSERT convention
+            
+            // ARRANGE - Setup everything to be used by the test
+            // E.g. create Mock
+            //      configure how Mock responds when certain functions are called.
+
+            // ACT - Call the class or function to be tested and store the result
+
+            // ASSERT - Check the function output matches expected values
+            expect(actualResult, expectedResult);
+        });
+    });
+}
+```
+
+## Unit Tests
+
+```
+Tests a single function OR class operates as expected.
+```
+
+```dart
+void main() {
+    /// UNIT Test
+    test('some name', () async {
+        // Structure as above
+    }); 
+}
+```
+
+## Widget Tests
+
+```
+Tests a single widget looks and behaves as expected.
+```
+
+```dart
+void main() {
+    // WIDGET Test
+    testWidgets('name', (WidgetTester tester) async {
+        // WidgetTester can be thought of as the user
+
+        // ARRANGE / ASSEMBLE
+        
+        // Render the page
+        await tester.pumpWidget(
+            MaterialApp(
+                /// Widget to be tested
+                home: MyHomePage(),
+            ),
+        ); 
+
+        // Find widgets to be tested
+        final button = find.byType(FloatingActionButton)
+
+        /// ACT
+        await tester.tap(button); // tap the button
+        await tester.pump(); // re-render the widget
+        final actualText = find.text('some text in a widget');
+
+        /// ASSERT
+        expect(actualText, findsOneWidget);
+    });
+}
+```
+
+## Integration Tests
+
+```
+Tests a large part or entire application to verify that multiple functions, classes, widgets and services operate as expected.
+```
+
+## app.dart
+
+app.dart file configures the test driver and application to be tested.
+
+```dart
+import 'package:flutter_driver/driver_extension.dart'; // integration testing library
+import '../lib/main.dart' as app; // import entire flutter application
+
+void main() {
+    // enable integration testing library
+    enableFlutterDriverExtension();
+    // run flutter application
+    app.main();
+}
+```
+
+## app_test.dart
+
+app_test.dart performs all the integration tests on the configured app and driver.
+
+```dart
+import 'package:flutter_driver/flutter_driver.dart'; // import drivers from testing library
+
+void main() {
+    group('some name', () {
+        
+        /// SETUP
+
+        /// Drives a Flutter Application running in another process
+        FlutterDriver driver;
+
+        setUpAll(() async {
+            driver = await FlutterDriver.connect();
+        });
+
+        tearDownAll(() async {
+            if (driver != null) {
+                driver.close();
+            }
+        });
+
+        final button = find.byType('FloatingActionButton');
+
+        test('some name', () {
+            /// ARRANGE - N/A
+
+            /// ACT
+            await driver.tap(button);
+            final textWidget = find.text('some text');
+            final actualText = await driver.getText(textWidget);
+
+            /// ASSERT
+            expect(actualText, 'someText');
+        });
+    });
+}
+```
