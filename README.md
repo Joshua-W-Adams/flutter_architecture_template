@@ -213,9 +213,15 @@ abstract class IRepository {
 i.e. the BLoC contains all the logic to co-ordinate/orchestrate this entire process and as such will be the location where the majority of our domain layer code lives.
 
 A bloc is separated into 3 separate files:
-- event
 - bloc
+- event
+```
+Events are the input to a Bloc. They are commonly added in response to user interactions. Such as button presses or lifecycle events like page loads.
+```
 - state
+```
+The present condition of something / "information" that you need to remember.
+```
 
 ```dart
 // event.dart
@@ -391,6 +397,13 @@ class RectangleRepository implements IRectangleRepository {
     //     
     // }
 }
+```
+## General Design Principals
+
+All functions within the application should be pure functions where possible.
+
+```
+pure function is a function where the result of calling it depends only on its arguments.
 ```
 
 ## Decoupling Data Layer and Domain Layer
