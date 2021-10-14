@@ -96,12 +96,10 @@ A detailed description of each layer is provided below.
 
 ## Presentation Layer
 ```
-"The presentation layer's responsibility **everything associated to the user interface**."
+"The presentation layer's responsibility is everything associated to the user interface."
 ```
-These responsibilites are typically as follows:
-- animations
-- pages (a single page/screen a user views, typically the overall layout of the page)
-- widgets (individual components that make up the page)
+These responsibilites are as follows:
+- user interface (pages, widgets, animations)
 - passing events to the domain layer (bloc)
 - rendering itself based on states returned by the domain (bloc) layer
 
@@ -142,6 +140,37 @@ class PresentationComponent extends StatelessWidget {
 ### Widgets / Pages / Animations
 
 All widgets in the presentation layer should follow the composite design pattern outlined in the theory folder of this repository.
+
+A widget is defined as:
+
+```
+Individual components that make up the page.
+```
+
+A animation is defined as:
+
+```
+Individual animations that are used in the page.
+```
+
+A page is defined as:
+
+```
+a single page/screen a user views, typically the overall layout of the page.
+```
+
+A page is comprised of two main parts:
+
+- Page
+```
+"Responsible for Creating a BLoC and providing it to the View."
+```
+- View
+```
+"Responsible for Consuming the state and interacting with the BLoC."
+```
+
+It's important to separate or decouple the creation of a BLoC (page) from the consumption of a BLoC (view) in order to have code that is much more testable and reusable. This will allow you to easily inject mock instances and test your view in isolation.
 
 ## Domain Layer
 
